@@ -32,9 +32,9 @@ public class TeacherServiceTest {
 		
 		List<Teacher> teachers = new ArrayList<Teacher>();
 		teachers.add(new Teacher());
-		Mockito.when(teacherDao.findAllBySubject(Mockito.any(Subject.class))).thenReturn(teachers);
+		Mockito.when(teacherDao.findAllBySubject(Mockito.any(String.class))).thenReturn(teachers);
 		
-		List<Teacher> teachersFromDB = teaherService.findAllBySubject(new Subject());
+		List<Teacher> teachersFromDB = teaherService.findAllBySubject("some subject");
 		
 		assertNotNull(teachersFromDB);
 	}
