@@ -2,8 +2,8 @@ package org.itstep.service.impl;
 
 import java.util.List;
 
+
 import org.itstep.dao.StudentDAO;
-import org.itstep.model.Group;
 import org.itstep.model.Student;
 import org.itstep.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +33,12 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.getOne(login);
 	}
 
-	public List<Student> findAllByGroup(Group group) {
+	public List<Student> findAllByGroup(String group) {
 		return studentDao.findAllByGroup(group);
 	}
 
-	public void delete(String login) {
-		studentDao.delete(login);
+	public void delete(Student student) {
+		studentDao.delete(student);
 	}
 
 }
