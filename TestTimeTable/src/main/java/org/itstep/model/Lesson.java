@@ -1,6 +1,7 @@
 package org.itstep.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,32 +17,30 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table( name = "LESSONS" )
+@Table(name = "LESSONS")
 public class Lesson {
 
-	private static final Long DURATION = 1000 * 60 * 90L;
-	
 	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO)
-	@Column( name = "LESSON_ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "LESSON_ID")
 	@JsonProperty
 	private Integer id;
-	
-	@ManyToOne( targetEntity = Subject.class )
+
+	@ManyToOne(targetEntity = Subject.class)
 	private Subject subject;
-	
-	@ManyToOne( targetEntity = Teacher.class )
+
+	@ManyToOne(targetEntity = Teacher.class)
 	private Teacher teacher;
-	
-	@ManyToOne( targetEntity = Group.class )
+
+	@ManyToOne(targetEntity = Group.class)
 	private Group group;
-	
-	@Column( name = "CABINET")
+
+	@Column(name = "CABINET")
 	@JsonProperty
 	private String cabinet;
-	
-	@Column( name = "START_TIME")
+
+	@Column(name = "START_TIME")
 	@JsonProperty
 	private Long startTime;
-	
+
 }
