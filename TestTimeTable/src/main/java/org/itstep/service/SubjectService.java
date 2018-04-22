@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.itstep.model.Subject;
 
-public interface SubjetServie {
+public interface SubjectService {
 	Subject save(Subject subject);
 
 	Subject update(Subject subject);
@@ -12,6 +12,4 @@ public interface SubjetServie {
 	Subject get(String subjectName);
 
 	void delete(Subject subject);
-
-	List<Subject> findAllByCourse(String course);
 }
