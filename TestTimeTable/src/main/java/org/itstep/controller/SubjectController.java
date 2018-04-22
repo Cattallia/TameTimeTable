@@ -32,8 +32,7 @@ public class SubjectController {
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 
-	@PutMapping(consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE }, produces = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PutMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	ResponseEntity<Subject> update(@RequestBody Subject subject) {
 		Subject savedSubject = subjectService.update(subject);
 		if (savedSubject != null) {
