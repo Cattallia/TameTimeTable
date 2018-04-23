@@ -43,7 +43,8 @@ public class TeacherController {
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping(path = "/get-one", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/get-one", consumes = { MediaType.ALL_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	ResponseEntity<Teacher> getOne(@RequestHeader String login) {
 		Teacher teacher = teacherService.get(login);
 		if (teacher != null) {
@@ -52,7 +53,8 @@ public class TeacherController {
 		return new ResponseEntity<Teacher>(HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping(path = "/get-by-subject", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@GetMapping(path = "/get-by-subject", consumes = { MediaType.ALL_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	ResponseEntity<List<Teacher>> findAllBySubject(@RequestHeader String name) {
 		List<Teacher> teachers = teacherService.findAllBySubject(name);
 		if (teachers != null) {

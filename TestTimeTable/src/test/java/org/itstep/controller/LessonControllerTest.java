@@ -4,11 +4,15 @@ import static org.junit.Assert.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.itstep.ApplicationRunner;
+import org.itstep.model.Group;
 import org.itstep.model.Lesson;
 import org.itstep.model.Subject;
 import org.itstep.service.LessonService;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,13 +34,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class LessonControllerTest {
 
-	@Autowired
-	TestRestTemplate restTemplate;
-
 	@MockBean
 	LessonService lessonService;
 
-	@Ignore
+	@Autowired
+	TestRestTemplate restTemplate;
+
+	private List<Lesson> lessons;
+
+	@Before
+	public void setUp() throws Exception {
+		lessons = new ArrayList<Lesson>();
+
+		for (int i = 1; i <= 3; i++) {
+			Lesson lesson = new Lesson();
+			lesson.setCabinet("ST2" + i);
+			lesson.setStartTime((long) 3);
+
+			lessons.add(lesson);
+		}
+	}
+
 	@Test
 	public void testSave() throws URISyntaxException {
 		Lesson lesson = new Lesson();
