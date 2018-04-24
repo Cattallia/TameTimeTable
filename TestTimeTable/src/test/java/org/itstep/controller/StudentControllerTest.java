@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.itstep.ApplicationRunner;
-import org.itstep.model.Student;
+import org.itstep.model.Subject;
+import org.itstep.model.Group;
 import org.itstep.model.Student;
 import org.itstep.service.StudentService;
 import org.junit.Before;
@@ -44,15 +45,16 @@ public class StudentControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		students = new ArrayList<Student>();
-
-		// User users = new User();
+		Group group = new Group();
+		group.setName("ST21");
 
 		for (int i = 1; i <= 3; i++) {
 			Student student = new Student();
-			student.setLogin("Java");
-			student.setPassword("54321");
-			student.setFirstName("ST1");
-			student.setSecondName("ST1_Test");
+			student.setLogin("student" + i);
+			student.setPassword("pass" + i);
+			student.setFirstName("firstName");
+			student.setSecondName("secondName");
+			student.setGroup(group);
 
 			students.add(student);
 		}
@@ -63,7 +65,7 @@ public class StudentControllerTest {
 		Mockito.when(studentService.save(Mockito.any(Student.class))).thenReturn(students.get(0));
 
 		RequestEntity<Student> request = new RequestEntity<Student>(students.get(0), HttpMethod.POST,
-				new URI("/group"));
+				new URI("/student"));
 
 		ResponseEntity<Student> response = restTemplate.exchange(request, Student.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -75,7 +77,8 @@ public class StudentControllerTest {
 	public void testUpdate() throws URISyntaxException {
 		Mockito.when(studentService.update(Mockito.any(Student.class))).thenReturn(students.get(0));
 
-		RequestEntity<Student> request = new RequestEntity<Student>(students.get(0), HttpMethod.PUT, new URI("/group"));
+		RequestEntity<Student> request = new RequestEntity<Student>(students.get(0), HttpMethod.PUT,
+				new URI("/student"));
 
 		ResponseEntity<Student> response = restTemplate.exchange(request, Student.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -88,10 +91,9 @@ public class StudentControllerTest {
 		Mockito.when(studentService.get(Mockito.anyString())).thenReturn(students.get(0));
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("firstName", "ST1");
-		headers.add("secondName", "ST1_Test");
+		headers.add("login", "student1");
 
-		RequestEntity request = new RequestEntity(headers, HttpMethod.GET, new URI("/group/get-one"));
+		RequestEntity request = new RequestEntity(headers, HttpMethod.GET, new URI("/student/get-one"));
 		ResponseEntity<Student> response = restTemplate.exchange(request, Student.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -99,20 +101,19 @@ public class StudentControllerTest {
 	}
 
 	@Test
-	public void testFindAllByGgoup() throws URISyntaxException {
+	public void testFindAllByGroup() throws URISyntaxException {
 		Mockito.when(studentService.findAllByGroup(Mockito.anyString())).thenReturn(students);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("password", "54321");
+		headers.add("name", "ST21");
 
-		RequestEntity request = new RequestEntity(headers, HttpMethod.GET, new URI("/group/get-by-password"));
+		RequestEntity request = new RequestEntity(headers, HttpMethod.GET, new URI("/student/get-by-group"));
 		ResponseEntity<List> response = restTemplate.exchange(request, List.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Mockito.verify(studentService, Mockito.times(1)).findAllByGroup(Mockito.anyString());
 
 		assertEquals(3, response.getBody().size());
-
 	}
 
 	@Test
@@ -120,7 +121,7 @@ public class StudentControllerTest {
 		Mockito.doNothing().when(studentService).delete(Mockito.any(Student.class));
 
 		RequestEntity<Student> request = new RequestEntity<Student>(students.get(0), HttpMethod.DELETE,
-				new URI("/group"));
+				new URI("/student"));
 
 		ResponseEntity<HttpStatus> response = restTemplate.exchange(request, HttpStatus.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());

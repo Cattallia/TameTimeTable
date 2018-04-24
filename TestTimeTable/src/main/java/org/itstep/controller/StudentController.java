@@ -1,9 +1,7 @@
 package org.itstep.controller;
 
 import java.util.List;
-
 import org.itstep.model.Student;
-import org.itstep.model.User;
 import org.itstep.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,17 +45,17 @@ public class StudentController {
 
 	@GetMapping(path = "/get-one", consumes = { MediaType.ALL_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	ResponseEntity<User> getOne(@RequestHeader String login) {
-		User savedUser = studentService.get(login);
-		if (savedUser != null) {
-			return new ResponseEntity<User>(savedUser, HttpStatus.OK);
+	ResponseEntity<Student> getOne(@RequestHeader String login) {
+		Student student = studentService.get(login);
+		if (student != null) {
+			return new ResponseEntity<Student>(student, HttpStatus.OK);
 		}
-		return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping(path = "/get-by-password", consumes = { MediaType.ALL_VALUE }, produces = {
+	@GetMapping(path = "/get-by-group", consumes = { MediaType.ALL_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	ResponseEntity<List<Student>> findAllByPassword(@RequestHeader String name) {
+	ResponseEntity<List<Student>> findAllByGroup(@RequestHeader String name) {
 		List<Student> students = studentService.findAllByGroup(name);
 		if (students != null) {
 			return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
